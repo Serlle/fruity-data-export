@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'pages#home'
-  
-  get 'fruits/new_csv', to: 'fruits#new_csv'
-  post 'fruits/create_csv', to: 'fruits#create_csv'
+
+  resources :export_fruits, only: [:new, :create]
 end

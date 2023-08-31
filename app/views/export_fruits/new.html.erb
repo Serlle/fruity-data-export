@@ -1,0 +1,35 @@
+<div id="page-form" class="d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
+  <h1 class="text-center pb-3">Create CSV File of Fruits</h1>
+  <div class="p-3">
+    <%= form_with(url: export_fruits_path, method: :post, class: "filter-form") do |form| %>
+
+      <div class="form-group">
+        <%= form.label :name_zip, "Name Zip:" %>
+        <%= form.text_field :name_zip %>
+      </div>
+
+      <h2 class="p-5">Search by Filter</h2>
+      <div class="form-group">
+        <%= form.label :family, "Family:" %>
+        <%= form.text_field :family %>
+      </div>
+      <div class="form-group">
+        <%= form.label :genus, "Genus:" %>
+        <%= form.text_field :genus %>
+      </div>
+      <div class="form-group">
+        <%= form.label :order, "Order:" %>
+        <%= form.text_field :order %>
+      </div>
+
+      <h2 class="p-5">Search by name</h2>
+      <div class="form-group">
+        <%= form.label :name_fruit, "Name Fruit:" %>
+        <%= form.text_field :name_fruit %>
+      </div>
+      <br>
+      <%= form.submit "Create CSV", class: "btn btn-primary" %>
+    <% end %>
+
+  </div>
+</div>
