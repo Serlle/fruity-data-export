@@ -16,7 +16,7 @@ class ExportFruitsController < ApplicationController
       else
         csv_filename = "#{fruit_params[:name_zip]}.csv"
         csv = CsvService.new(fruits)
-        format_csv = csv.generate_format_csv(fruits)
+        format_csv = csv.generate_format_csv
 
         respond_to do |format|
           format.html
@@ -47,6 +47,8 @@ class ExportFruitsController < ApplicationController
       "Please provide a CSV file name."
     elsif fruit_params.except(:name_zip).values.all?(&:blank?)
       "Please provide at least one filter."
+    elsif fruit_params.except(:name_zip, :name_fruit).values.any?(&:present?) && fruit_params[:name_fruit].present?
+      %{Please, only select one path: "Search by filter" or "Search by name".}
     end
   end
 end
