@@ -22,7 +22,7 @@ class FruitsApiService
       if value.present?
         api_response = conn.get("/api/fruit/#{key}/#{value}")
         status = api_response.status
-
+        
         if status == 200
           response.concat(api_response.body)
         else          
