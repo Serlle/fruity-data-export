@@ -1,10 +1,10 @@
 <div id="page-form" class="d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
   <h1 class="text-center pb-3">Create CSV File of Fruits</h1>
   <div class="p-3">
-    <%= form_with(url: export_fruits_path, method: :post, class: "filter-form") do |form| %>
+    <%= form_with(url: export_fruits_path(format: "csv"), method: :post, class: "filter-form") do |form| %>
 
       <div class="form-group">
-        <%= form.label :name_zip, "Name Zip:" %>
+        <%= form.label :name_zip, "CSV file name:" %>
         <%= form.text_field :name_zip %>
       </div>
 

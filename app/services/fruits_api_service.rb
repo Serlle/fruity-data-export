@@ -11,12 +11,26 @@ class FruitsApiService
       f.response :json # decode response bodies as JSON
     end
 
-    response = conn.get do |req|
-      req.url("/api/fruit/family/#{@params["family"]}") if @params["family"].present?
-      req.url("/api/fruit/genus/#{@params["genus"]}") if @params["genus"].present?
-      req.url("/api/fruit/order/#{@params["order"]}") if @params["order"].present?
+    response = []
+    params = {
+      family: @params["family"],
+      genus: @params["genus"],
+      order: @params["order"]
+    }
+
+    params.each do |key, value| 
+      if value.present?
+        api_response = conn.get("/api/fruit/#{key}/#{value}")
+        status = api_response.status
+
+        if status == 200
+          response.concat(api_response.body)
+        else          
+          return { error: api_response.body["error"] }
+        end
+      end
     end
-  
-    return response.body
+
+    return { body: response }    
   end
 end
