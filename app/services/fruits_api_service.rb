@@ -17,7 +17,7 @@ class FruitsApiService
     name_fruit = @params[:name_fruit]
     if name_fruit.present?
       response = fetch_fruit_by_name(conn, name_fruit.capitalize)
-      return { body: response }
+      return response
     end
     
     # Search by filter
@@ -39,8 +39,18 @@ class FruitsApiService
   private
   
   def fetch_fruit_by_name(conn, name)
-    api_response = conn.get("/api/fruit/all").body
-    api_response.select { |fruit| fruit["name"] == name }
+    api_response = conn.get("/api/fruit/all")
+    status = api_response.status
+    if status == 200
+      fruit = api_response.body.select { |fruit| fruit["name"] == name }
+      if fruit.empty?
+        { error: "Fruit not found" }
+      else
+        { body: fruit }
+      end
+    else   
+      { error: api_response.body["error"] }
+    end
   end
 
 end
